@@ -67,14 +67,14 @@ resources:
   type: git
   source:
     commit_verification_keys: ((cloud-gov-pgp-keys))
-    uri: ((uaa-config-git-uri))
+    uri: https://github.com/cloud-gov/cg-deploy-opslogin
     branch: ((uaa-config-git-branch))
 
 - name: pipeline-tasks
   type: git
   source:
     commit_verification_keys: ((cloud-gov-pgp-keys))
-    uri: ((pipeline-tasks-git-uri))
+    uri: https://github.com/cloud-gov/cg-pipeline-tasks
     branch: ((pipeline-tasks-git-branch))
 
 - name: terraform-yaml
@@ -130,12 +130,20 @@ resources:
     url: ((slack-webhook-url))
 
 jobs:
+- name: set-self
+  plan:
+    - get: uaa-config
+      trigger: true
+    - set_pipeline: self
+      file: uaa-config/ci/pipeline.yml
+
 - name: deploy-ops-uaa
   serial_groups: [ops-uaa]
   plan:
   - in_parallel:
     - get: uaa-config
       trigger: true
+      passed: [set-self]
     - get: common
       trigger: true
     - get: terraform-yaml
@@ -164,11 +172,11 @@ jobs:
       - uaa-config/ops/disk.yml
   on_failure:
     put: slack
-    params:
+    params: &slack-failure-params
       text: |
         :x: FAILED to deploy ops UAA
         <$ATC_EXTERNAL_URL/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
-      channel: '#cg-platform'
+      channel: ((slack-channel-platform))
       username: ((slack-username))
       icon_url: ((slack-icon-url))
 
@@ -185,10 +193,8 @@ jobs:
   on_failure:
     put: slack
     params:
+      <<: *slack-failure-params
       text: |
         :x: UAA Smoke Tests for opslogin FAILED
         <$ATC_EXTERNAL_URL/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
-      channel: '#cg-platform'
-      username: ((slack-username))
-      icon_url: ((slack-icon-url))
 
