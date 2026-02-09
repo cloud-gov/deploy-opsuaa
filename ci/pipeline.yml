@@ -84,13 +84,6 @@ resources:
     versioned_file: ((tf-state-file))
     region_name: ((aws-region))
 
-- name: common
-  type: s3-iam
-  source:
-    bucket: ((secrets-bucket))
-    versioned_file: opsuaa.yml
-    region_name: ((aws-region))
-
 - name: stemcell-jammy
   type: bosh-io-stemcell
   source:
@@ -144,8 +137,6 @@ jobs:
     - get: uaa-config
       trigger: true
       passed: [set-self]
-    - get: common
-      trigger: true
     - get: terraform-yaml
     - get: stemcell-jammy
       trigger: true
@@ -165,7 +156,6 @@ jobs:
       - uaa-customized-release/*.tgz
       - secureproxy-release/*.tgz
       vars_files:
-      - common/opsuaa.yml
       - terraform-yaml/state.yml
       ops_files:
       - uaa-config/ops/add-bpm.yml
