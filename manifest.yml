@@ -587,11 +587,15 @@ instance_groups:
             self_service_links_enabled: false
             saml:
               entity_base_url: opslogin.fr.cloud.gov
-              activeKeyId: key-2
+              activeKeyId: ((saml-active-key))
               keys:
+                key-1:
+                  key: ((uaa_login_saml-key-1.private_key))
+                  certificate: ((uaa_login_saml-key-1.certificate))
+                  passphrase: ""
                 key-2:
-                  key: ((uaa_login_saml_20190222.private_key))
-                  certificate: ((uaa_login_saml_20190222.certificate))
+                  key: ((uaa_login_saml-key-2.private_key))
+                  certificate: ((uaa_login_saml-key-2.certificate))
                   passphrase: ""
               providers: ((saml_providers))
           uaadb:
