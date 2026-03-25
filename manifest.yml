@@ -488,7 +488,17 @@ instance_groups:
                 show-on-homepage: true
                 app-launch-url: https://logs-platform.dev.us-gov-west-1.aws-us-gov.cloud.gov/
                 app-icon: "iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAAAXNSR0IArs4c6QAAA7JJREFUeF7tmwtu3DAMBZ2bNSdre7L2ZmkEVIFr2CYfPyLdfQsECGBJFGcsWeYmbxs/pQTeSqMz+EYBxTcBBVBAMYHi8FwBFFBMoDg8VwAFFBMoDs8VQAHFBIrDcwVQQDGB2PA/PocbP+oPV4AaldhwgP++bVh5hwJErqoGE/5oDDGFGqum8nqN9vApYLH/I3wKWCjgDD4FLBJwBZ8CFgi4g08ByQIk+BSQKEADnwKSBGjhU0CCAAT+723b3pE5dH8Rm3UVqL6CABDapsKHl0tgYpqh9sn//OywWkI6/M4CzpJfKWEJ/K4C7pJfIWEZ/I4CNMlnStDEn9sn/MA923c7PYSR5DMkIPFD4HdaAUjy80aKlIDED4PfRQCS/HEVR0hA4ofC7yAASf7q6OqRgMQPh18tAEleem+wSEDip8CvFIAkL8G3PBOQ+GnwqwSgyY95flNa0KwEND5U21HO86vZ6mOoNflfQRKs8bVcx/hQyWSlAG/yXgne+JKEOT7EFGoszeDmelTyVglR8a9S3I8PMYUaGwVEJ49KGNMef7Gm+VgeuMf8IKZQY00GhzbR8OfwiATttCPgwwebTAFZ8DMkRMFvIyAbfqSESPgtBKyCHyEhGn65gNXwPRIs8Ee8D+GhAm3rUGMhcBV8iwQr/LYCquEjEjzwWwroAl8jwQu/nYBu8O8kRMBvJaAr/DMJUfDbCOgOfy9h/B5ZUi4/BT0FvrYEgbYrFyBNYCZkWfaaerqmDQp1tteMLeUPHe2hxn9nKU1gNLPC1/yf7Yiv+eYLlaCt50v5Q0yhxkoBHviaV/kJIFICUs9vLcALHxEw2kZIQOv5bQVEwEcFeCWcHSikXaGlgCj4FgFWCVenuccJiIRvFYBKuDtKP0pANHyPAK0E6T3mMQIs8CNe5b17cHX/f47Hku2zs/RIwAqfAg5ELQLGXyR4aivVd2B1fPcKQN8wj+2rAVTHpwDhDpJ2Ba9ACqCAewLZd6D3Dvb25wr4n1fAinq69w6s7p+2AlbV06sBeuOnCFhZT/cCqO4fLmB1Pb0aoDd+qICKeroXQHX/MAFV9fRqgN74IQIq6+leANX93QKq6+nVAL3x3QK8E3j1/hTw9DfhV7+DvflzBXAFsBr6RUAq/V59J3yHUBrTu4Sf3p9bELcgbkGuLcj7pTz77whI+zVhJROggGTA0vAUIBFKvk4ByYCl4SlAIpR8nQKSAUvDU4BEKPk6BSQDloanAIlQ8nUKSAYsDU8BEqHk638A1z09cEe0n1IAAAAASUVORK5CYII="
-                secret: ((platform_kibana_client_secret_development))
+                secret: ((platform_kibana_client_secret_development))   
+              platform-opensearch-development:
+                <<: *client-template
+                scope: openid,email,profile
+                redirect-uri: https://logs-platform-test.dev.us-gov-west-1.aws-us-gov.cloud.gov/oauth2/callback
+                name: "Development Logs Platform"
+                show-on-homepage: true
+                app-launch-url: https://logs-platform-test.dev.us-gov-west-1.aws-us-gov.cloud.gov/
+                app-icon: "iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAAAXNSR0IArs4c6QAAA7JJREFUeF7tmwtu3DAMBZ2bNSdre7L2ZmkEVIFr2CYfPyLdfQsECGBJFGcsWeYmbxs/pQTeSqMz+EYBxTcBBVBAMYHi8FwBFFBMoDg8VwAFFBMoDs8VQAHFBIrDcwVQQDGB2PA/PocbP+oPV4AaldhwgP++bVh5hwJErqoGE/5oDDGFGqum8nqN9vApYLH/I3wKWCjgDD4FLBJwBZ8CFgi4g08ByQIk+BSQKEADnwKSBGjhU0CCAAT+723b3pE5dH8Rm3UVqL6CABDapsKHl0tgYpqh9sn//OywWkI6/M4CzpJfKWEJ/K4C7pJfIWEZ/I4CNMlnStDEn9sn/MA923c7PYSR5DMkIPFD4HdaAUjy80aKlIDED4PfRQCS/HEVR0hA4ofC7yAASf7q6OqRgMQPh18tAEleem+wSEDip8CvFIAkL8G3PBOQ+GnwqwSgyY95flNa0KwEND5U21HO86vZ6mOoNflfQRKs8bVcx/hQyWSlAG/yXgne+JKEOT7EFGoszeDmelTyVglR8a9S3I8PMYUaGwVEJ49KGNMef7Gm+VgeuMf8IKZQY00GhzbR8OfwiATttCPgwwebTAFZ8DMkRMFvIyAbfqSESPgtBKyCHyEhGn65gNXwPRIs8Ee8D+GhAm3rUGMhcBV8iwQr/LYCquEjEjzwWwroAl8jwQu/nYBu8O8kRMBvJaAr/DMJUfDbCOgOfy9h/B5ZUi4/BT0FvrYEgbYrFyBNYCZkWfaaerqmDQp1tteMLeUPHe2hxn9nKU1gNLPC1/yf7Yiv+eYLlaCt50v5Q0yhxkoBHviaV/kJIFICUs9vLcALHxEw2kZIQOv5bQVEwEcFeCWcHSikXaGlgCj4FgFWCVenuccJiIRvFYBKuDtKP0pANHyPAK0E6T3mMQIs8CNe5b17cHX/f47Hku2zs/RIwAqfAg5ELQLGXyR4aivVd2B1fPcKQN8wj+2rAVTHpwDhDpJ2Ba9ACqCAewLZd6D3Dvb25wr4n1fAinq69w6s7p+2AlbV06sBeuOnCFhZT/cCqO4fLmB1Pb0aoDd+qICKeroXQHX/MAFV9fRqgN74IQIq6+leANX93QKq6+nVAL3x3QK8E3j1/hTw9DfhV7+DvflzBXAFsBr6RUAq/V59J3yHUBrTu4Sf3p9bELcgbkGuLcj7pTz77whI+zVhJROggGTA0vAUIBFKvk4ByYCl4SlAIpR8nQKSAUvDU4BEKPk6BSQDloanAIlQ8nUKSAYsDU8BEqHk638A1z09cEe0n1IAAAAASUVORK5CYII="
+                secret: ((platform_opensearch_client_secret_development))
+
               platform-kibana-staging:
                 <<: *client-template
                 scope: openid,email,profile
@@ -645,6 +655,8 @@ variables:
   - name: concourse_client_secret_production
     type: password
   - name: platform_kibana_client_secret_development
+    type: password
+  - name: platform_opensearch_client_secret_development
     type: password
   - name: platform_kibana_client_secret_staging
     type: password
