@@ -57,9 +57,6 @@ instance_groups:
       - name: uaa
         release: uaa-customized
         properties:
-          runtime:
-            tomcat:
-              enabled: true
           encryption:
             encryption_keys:
               - label: uaa-encryption-key-1
