@@ -68,7 +68,7 @@ resources:
   source:
     commit_verification_keys: ((cloud-gov-pgp-keys))
     uri: https://github.com/cloud-gov/cg-deploy-opslogin
-    branch: ((uaa-config-git-branch))
+    branch: uaa-customized #((uaa-config-git-branch))
 
 - name: pipeline-tasks
   type: git
@@ -88,11 +88,6 @@ resources:
   type: bosh-io-stemcell
   source:
     name: bosh-aws-xen-hvm-ubuntu-jammy-go_agent
-
-- name: uaa-release
-  type: bosh-io-release
-  source:
-    repository: cloudfoundry/uaa-release
 
 - name: uaa-customized-release
   type: s3-iam
@@ -127,8 +122,10 @@ jobs:
   plan:
     - get: uaa-config
       trigger: true
-    - set_pipeline: self
-      file: uaa-config/ci/pipeline.yml
+#    - set_pipeline: self
+#      file: uaa-config/ci/pipeline.yml
+
+
 
 - name: deploy-ops-uaa
   serial_groups: [ops-uaa]
@@ -136,23 +133,20 @@ jobs:
   - in_parallel:
     - get: uaa-config
       trigger: true
-      passed: [set-self]
+      passed: [plan-ops-uaa]
     - get: terraform-yaml
     - get: stemcell-jammy
-      trigger: true
-    - get: uaa-release
       trigger: true
     - get: uaa-customized-release
       trigger: true
     - get: secureproxy-release
       trigger: true
   - put: uaa-deployment
-    params:
+    params: &deploy-params
       manifest: uaa-config/manifest.yml
       stemcells:
       - stemcell-jammy/*.tgz
       releases:
-      - uaa-release/*.tgz
       - uaa-customized-release/*.tgz
       - secureproxy-release/*.tgz
       vars_files:
@@ -169,6 +163,36 @@ jobs:
       channel: ((slack-channel-platform))
       username: ((slack-username))
       icon_url: ((slack-icon-url))
+
+
+- name: plan-ops-uaa
+  serial_groups: [ops-uaa]
+  plan:
+  - in_parallel:
+    - get: uaa-config
+      trigger: true
+      passed: [set-self]
+    - get: terraform-yaml
+    - get: stemcell-jammy
+      trigger: true
+    - get: uaa-customized-release
+      trigger: true
+    - get: secureproxy-release
+      trigger: true
+  - put: uaa-deployment
+    params:
+      dry_run: true
+      <<: *deploy-params
+  on_failure:
+    put: slack
+    params: &slack-failure-params
+      text: |
+        :x: FAILED to plan ops UAA
+        <$ATC_EXTERNAL_URL/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME|View build details>
+      channel: ((slack-channel-platform))
+      username: ((slack-username))
+      icon_url: ((slack-icon-url))
+
 
 - name: uaa-smoke-tests
   plan:

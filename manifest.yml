@@ -11,8 +11,6 @@ templates:
     refresh-token-validity: 1800
 
 releases:
-  - name: uaa
-    version: latest
   - name: uaa-customized
     version: latest
   - name: secureproxy
@@ -57,7 +55,7 @@ instance_groups:
                   network: opsuaa
                   query: "*"
       - name: uaa
-        release: uaa
+        release: uaa-customized
         properties:
           runtime:
             tomcat:
@@ -621,9 +619,6 @@ instance_groups:
               - tag: admin
                 name: opsuaa
                 password: ((terraform_outputs.opsuaa_rds_password))
-      - name: uaa-customized
-        release: uaa-customized
-        properties: {}
       - name: secureproxy
         release: secureproxy
         properties:
