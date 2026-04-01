@@ -68,7 +68,7 @@ resources:
   source:
     commit_verification_keys: ((cloud-gov-pgp-keys))
     uri: https://github.com/cloud-gov/cg-deploy-opslogin
-    branch: uaa-customized #((uaa-config-git-branch))
+    branch: ((uaa-config-git-branch))
 
 - name: pipeline-tasks
   type: git
@@ -122,8 +122,8 @@ jobs:
   plan:
     - get: uaa-config
       trigger: true
-#    - set_pipeline: self
-#      file: uaa-config/ci/pipeline.yml
+    - set_pipeline: self
+      file: uaa-config/ci/pipeline.yml
 
 
 
