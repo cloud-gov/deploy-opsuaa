@@ -492,7 +492,7 @@ instance_groups:
               platform-opensearch-development:
                 <<: *client-template
                 scope: openid,email,profile
-                redirect-uri: https://logs-platform-test.dev.us-gov-west-1.aws-us-gov.cloud.gov/oauth2/callback
+                redirect-uri: https://logs-platform-test.dev.us-gov-west-1.aws-us-gov.cloud.gov/_dashboards/auth/openid/login
                 name: "Development Logs Platform"
                 show-on-homepage: true
                 app-launch-url: https://logs-platform-test.dev.us-gov-west-1.aws-us-gov.cloud.gov/
