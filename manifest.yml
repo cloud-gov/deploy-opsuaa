@@ -486,7 +486,7 @@ instance_groups:
                 secret: ((platform_kibana_client_secret_development))   
               platform-opensearch-development:
                 <<: *client-template
-                scope: openid,email,profile
+                scope: openid,email,profile,cloud_controller.admin
                 redirect-uri: https://logs-platform-test.dev.us-gov-west-1.aws-us-gov.cloud.gov/auth/openid/login
                 name: "Development Logs Platform"
                 show-on-homepage: true
