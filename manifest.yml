@@ -492,7 +492,7 @@ instance_groups:
                 override: true
                 access-token-validity: 1800
                 refresh-token-validity: 1800
-                scope: openid,email,profile, cloud_controller.admin
+                scope: openid,email,profile
                 redirect-uri: https://logs-platform-test.dev.us-gov-west-1.aws-us-gov.cloud.gov/auth/openid/login
                 name: "Development Logs Platform"
                 show-on-homepage: true
