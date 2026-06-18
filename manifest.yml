@@ -457,7 +457,7 @@ instance_groups:
               defectdojo_staging:
                 <<: *client-template
                 scope: openid,email,profile
-                redirect-uri: https://defectdojo.fr-stage.cloud.gov/oauth2/idpresponse,https://defectdojo.fr-stage.cloud.gov/complete/oidc
+                redirect-uri: https://defectdojo.fr-stage.cloud.gov/oauth2/idpresponse,https://defectdojo.fr-stage.cloud.gov/complete/oidc/
                 name: "Staging Defect Dojo"
                 show-on-homepage: true
                 app-launch-url: https://defectdojo.fr-stage.cloud.gov
@@ -467,7 +467,7 @@ instance_groups:
               defectdojo_production:
                 <<: *client-template
                 scope: openid,email,profile
-                redirect-uri: https://defectdojo.fr.cloud.gov/oauth2/idpresponse,https://defectdojo.fr.cloud.gov/complete/oidc
+                redirect-uri: https://defectdojo.fr.cloud.gov/oauth2/idpresponse,https://defectdojo.fr.cloud.gov/complete/oidc/
                 name: "Production Defect Dojo"
                 show-on-homepage: true
                 app-launch-url: https://defectdojo.fr.cloud.gov
